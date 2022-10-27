@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Raleway:wght@800&display=swap" rel="stylesheet">
 
-<meta charset="utf-8" />
-<title>Bus tracker</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
-<link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <title>Bus tracker</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
 
     <!-- adding favicon -->
     <link rel="icon" type="image/x-icon" href="/icons/Bus.svg">
@@ -22,7 +22,8 @@
 
 
 
-<body>
+<body> 
+  <!-- I need to import react libraries, move script to index js, import index.js-->
 
 <div id="map"></div>
 <div class="map-overlay top">
@@ -30,6 +31,8 @@
     Show stops between MIT and Harvard
   </button>
 </div>
+
+
 
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoiYWRyaWdhbGxlIiwiYSI6ImNsNjJzMGl3MzJhMmczY2wzMnZjcngwNDIifQ.2AaxTiSk1mb936AhmcW5zg';
@@ -44,6 +47,7 @@
     var marker = new mapboxgl.Marker()
         .setLngLat([-71.091542, 42.358862])
         .addTo(map); //adding marker for MIT
+
 
     const busStops = [
       [-71.093729, 42.359244],
@@ -62,6 +66,21 @@
 
     var counter = 0;
     function move(){
+      const [data, setData] = React.useState(null);
+      const [loaded, setLoaded] = React.useState(false);
+
+      React.UseEffect(() => {
+        async function getData() {
+          const response = await fetch();
+          const json = await response.json();
+          setData(json);
+          setLoaded(true);
+        }
+
+      },[])
+      console.log('loaded:', loaded, 'data:', data);
+
+
       setTimeout(()=>{
         if (counter >= busStops.length) return;
         marker.setLngLat(busStops[counter]);
